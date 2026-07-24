@@ -117,7 +117,7 @@ function Booth() {
               size={isMobile ? 320 : 520}
             />
 
-            <div className="pointer-events-none absolute -left-40 top-16 hidden h-56 w-40 md:block">
+            <div className="pointer-events-none absolute -left-48 top-8 hidden h-60 w-48 lg:block">
               <Mascot />
             </div>
 
