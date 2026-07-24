@@ -1,17 +1,12 @@
 // "Vanakkam Sapiens!" heading matching the uploaded reference:
 // - "VANAKKAM" arched, thin tracked
 // - "SAPIENS!" heavy display, punchy green
-import { Mascot } from "./Mascot";
-
 export function HeroHeading() {
   return (
     <div className="relative flex flex-col items-center">
-      <div className="mb-2 h-24 w-24 sm:h-28 sm:w-28">
-        <Mascot />
-      </div>
       <ArchedVanakkam />
       <h1
-        className="font-display text-[64px] leading-none tracking-tight sm:text-[92px] md:text-[112px]"
+        className="font-display text-[48px] leading-none tracking-tight sm:text-[72px] md:text-[88px]"
         style={{
           color: "#22c55e",
           textShadow:
@@ -28,7 +23,7 @@ function ArchedVanakkam() {
   return (
     <svg
       viewBox="0 0 600 180"
-      className="mb-1 w-[280px] sm:w-[420px] md:w-[500px]"
+      className="mb-1 w-[220px] sm:w-[320px] md:w-[400px]"
       aria-label="Vanakkam"
     >
       <defs>
