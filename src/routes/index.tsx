@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ChallengeModal } from "@/components/booth/ChallengeModal";
 import { Confetti } from "@/components/booth/Confetti";
@@ -39,17 +39,15 @@ function Booth() {
 
   // When wheel lands, pick a question and open the modal (delayed for confetti).
   const landedCategory = landedIndex != null ? categories[landedIndex] : null;
-  useMemo(() => {
-    if (state === "landed" && landedCategory) {
-      setConfettiKey((k) => k + 1);
-      const q = pickQuestion(landedCategory);
-      const t = window.setTimeout(() => {
-        setChallenge(q);
-        setModalOpen(true);
-      }, 650);
-      return () => window.clearTimeout(t);
-    }
-    return undefined;
+  useEffect(() => {
+    if (state !== "landed" || !landedCategory) return;
+    setConfettiKey((k) => k + 1);
+    const q = pickQuestion(landedCategory);
+    const t = window.setTimeout(() => {
+      setChallenge(q);
+      setModalOpen(true);
+    }, 650);
+    return () => window.clearTimeout(t);
   }, [state, landedCategory]);
 
   const handleNextPlayer = () => {
