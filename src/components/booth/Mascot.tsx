@@ -12,8 +12,8 @@ export function Mascot({ className = "" }: { className?: string }) {
         alt="Code Sapiens mascot"
         className="cs-mascot-idle relative h-full w-full object-contain"
         style={{
-          filter:
-            "invert(1) drop-shadow(0 0 24px rgba(34,197,94,0.45))",
+          filter: "invert(1) drop-shadow(0 0 18px rgba(34,197,94,0.55))",
+          mixBlendMode: "lighten",
         }}
         draggable={false}
       />
