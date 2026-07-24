@@ -9,6 +9,7 @@ import { ParticleBackground } from "@/components/booth/ParticleBackground";
 import { SpinWheel } from "@/components/booth/SpinWheel";
 import { CATEGORIES, pickQuestion, type Challenge } from "@/data/challenges";
 import { useSpinWheel } from "@/hooks/useSpinWheel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,6 +58,7 @@ function Booth() {
   };
 
   const spinning = state === "spinning";
+  const isMobile = useIsMobile();
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white font-ui">
@@ -112,7 +114,7 @@ function Booth() {
               categories={categories}
               rotation={rotation}
               spinning={spinning}
-              size={typeof window !== "undefined" && window.innerWidth < 640 ? 340 : 520}
+              size={isMobile ? 320 : 520}
             />
 
             <div className="pointer-events-none absolute -left-40 top-16 hidden h-56 w-40 md:block">
