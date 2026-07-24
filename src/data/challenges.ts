@@ -137,11 +137,7 @@ export const CATEGORIES: ChallengeCategory[] = file.categories.map(
   }),
 );
 
-function pickFrom<T>(list: T[]): T {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
-// Resolve a random challenge for a category. Adding new questions to
+// Resolve every challenge for a category. Adding new questions to
 // challenges.json is enough — no code changes required.
 function shuffle<T>(list: T[]): T[] {
   const a = [...list];
