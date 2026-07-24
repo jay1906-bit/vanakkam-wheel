@@ -1,0 +1,261 @@
+{
+  "categories": [
+    {
+      "id": "ai-or-human",
+      "title": "AI or Human?",
+      "type": "external",
+      "url": "https://realorai.dev/"
+    },
+    {
+      "id": "logo-quest",
+      "title": "Logo Quest",
+      "type": "image-quiz",
+      "questions": [
+        {
+          "id": 1,
+          "image": "/logos/logitech.png",
+          "answer": "Logitech"
+        },
+        {
+          "id": 2,
+          "image": "/logos/opencv.png",
+          "answer": "OpenCV"
+        },
+        {
+          "id": 3,
+          "image": "/logos/openshot.png",
+          "answer": "OpenShot"
+        },
+        {
+          "id": 4,
+          "image": "/logos/linux.png",
+          "answer": "Linux"
+        },
+        {
+          "id": 5,
+          "image": "/logos/brave.png",
+          "answer": "Brave Browser"
+        }
+      ]
+    },
+    {
+      "id": "myth-or-fact",
+      "title": "Myth or Fact?",
+      "type": "true-false",
+      "questions": [
+        {
+          "id": 1,
+          "statement": "Incognito mode makes you completely anonymous online.",
+          "answer": "Myth",
+          "explanation": "It only hides your browsing history on your device."
+        },
+        {
+          "id": 2,
+          "statement": "Git is the same as GitHub.",
+          "answer": "Myth",
+          "explanation": "Git is a version control system, while GitHub is a hosting platform."
+        },
+        {
+          "id": 3,
+          "statement": "Open-source software is always free to use.",
+          "answer": "Fact",
+          "explanation": ""
+        },
+        {
+          "id": 4,
+          "statement": "Python is a compiled language only.",
+          "answer": "Myth",
+          "explanation": "Python is primarily interpreted."
+        },
+        {
+          "id": 5,
+          "statement": "QR stands for Quick Response.",
+          "answer": "Fact",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "id": "emoji-decode",
+      "title": "Emoji Decode",
+      "type": "emoji",
+      "questions": [
+        {
+          "id": 1,
+          "emoji": "🌐🕸️",
+          "answer": "World Wide Web"
+        },
+        {
+          "id": 2,
+          "emoji": "🗑️♻️",
+          "answer": "Recycle Bin"
+        },
+        {
+          "id": 3,
+          "emoji": "📧🐟",
+          "answer": "Phishing"
+        },
+        {
+          "id": 4,
+          "emoji": "📦🐳",
+          "answer": "Docker / Containerization"
+        },
+        {
+          "id": 5,
+          "emoji": "🌐🕷️🤖",
+          "answer": "Web Crawler"
+        }
+      ]
+    },
+    {
+      "id": "expand-it",
+      "title": "Expand It!",
+      "type": "acronym",
+      "questions": [
+        {
+          "id": 1,
+          "term": "API",
+          "answer": "Application Programming Interface"
+        },
+        {
+          "id": 2,
+          "term": "URL",
+          "answer": "Uniform Resource Locator"
+        },
+        {
+          "id": 3,
+          "term": "HTML",
+          "answer": "HyperText Markup Language"
+        },
+        {
+          "id": 4,
+          "term": "USB",
+          "answer": "Universal Serial Bus"
+        },
+        {
+          "id": 5,
+          "term": "VPN",
+          "answer": "Virtual Private Network"
+        }
+      ]
+    },
+    {
+      "id": "pitch-it",
+      "title": "Pitch It!",
+      "type": "creative",
+      "instruction": "Explain the following tech term in ONE funny sentence.",
+      "questions": [
+        {
+          "id": 1,
+          "term": "LeetCode"
+        },
+        {
+          "id": 2,
+          "term": "Git"
+        },
+        {
+          "id": 3,
+          "term": "Bug"
+        },
+        {
+          "id": 4,
+          "term": "Artificial Intelligence"
+        }
+      ]
+    },
+    {
+      "id": "tech-in-tamil",
+      "title": "Tech in Tamil",
+      "type": "mcq",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Password - தமிழ் பெயர் என்ன?",
+          "options": [
+            "கணினி",
+            "கடவுச்சொல்",
+            "உலாவி",
+            "கோப்பு"
+          ],
+          "answer": 1
+        },
+        {
+          "id": 2,
+          "question": "Browser - தமிழ் பெயர் என்ன?",
+          "options": [
+            "உலாவி",
+            "வன்பொருள்",
+            "சேவையகம்",
+            "பதிவிறக்கம்"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 3,
+          "question": "Computer - தமிழ் பெயர் என்ன?",
+          "options": [
+            "மின்னஞ்சல்",
+            "இணையம்",
+            "கணினி",
+            "விசைப்பலகை"
+          ],
+          "answer": 2
+        },
+        {
+          "id": 4,
+          "question": "Keyboard - தமிழ் பெயர் என்ன?",
+          "options": [
+            "விசைப்பலகை",
+            "அடைவு",
+            "வன்பொருள்",
+            "மேக கணினி"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 5,
+          "question": "Download - தமிழ் பெயர் என்ன?",
+          "options": [
+            "பதிவிறக்கம்",
+            "பதிவேற்றம்",
+            "இணையம்",
+            "தரவுத்தளம்"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "rush",
+      "title": "15 Second Rush",
+      "type": "timer",
+      "timer": 15,
+      "questions": [
+        {
+          "id": 1,
+          "challenge": "Name 5 Programming Languages"
+        },
+        {
+          "id": 2,
+          "challenge": "Name 5 Tech Companies"
+        },
+        {
+          "id": 3,
+          "challenge": "Name 5 AI Tools"
+        }
+      ]
+    },
+    {
+      "id": "network-quest",
+      "title": "Network Quest",
+      "type": "challenge",
+      "challenge": "🤝 Find a random attendee, introduce yourself, have a quick conversation, and exchange LinkedIn profiles. Then come back and claim your reward!"
+    },
+    {
+      "id": "lucky-treat",
+      "title": "Lucky Treat",
+      "type": "reward",
+      "reward": "🎉 Congratulations! You won a FREE candy! 🍬 Head over to the Code Sapiens booth to claim your sweet treat."
+    }
+  ]
+}

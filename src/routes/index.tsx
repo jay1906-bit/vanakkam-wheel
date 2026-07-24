@@ -142,10 +142,6 @@ function Booth() {
         open={modalOpen}
         category={landedCategory}
         challenge={challenge}
-        onStart={() => {
-          // Placeholder for challenge start — content will be provided later.
-          setModalOpen(false);
-        }}
         onNext={handleNextPlayer}
       />
     </main>
