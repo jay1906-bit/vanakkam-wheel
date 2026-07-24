@@ -40,8 +40,11 @@ function Booth() {
   const [modalOpen, setModalOpen] = useState(false);
   const [confettiKey, setConfettiKey] = useState(0);
   const [queue, setQueue] = useState<Challenge[]>([]);
+  const [clickedCategoryIndex, setClickedCategoryIndex] = useState<number | null>(null);
 
   const landedCategory = landedIndex != null ? categories[landedIndex] : null;
+  const clickedCategory = clickedCategoryIndex != null ? categories[clickedCategoryIndex] : null;
+  const activeCategory = clickedCategory || landedCategory;
 
   // When wheel lands: external categories open the target URL in a new tab and
   // reset the wheel; every other category opens the modal with a shuffled
@@ -68,7 +71,21 @@ function Booth() {
   const handleBackToWheel = () => {
     setModalOpen(false);
     setQueue([]);
+    setClickedCategoryIndex(null);
     reset();
+  };
+
+  const handleSegmentClick = (index: number) => {
+    if (spinning) return;
+    const cat = categories[index];
+    const built = buildChallengeQueue(cat);
+    if (built.length === 1 && built[0].type === "external") {
+      window.open(built[0].url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setClickedCategoryIndex(index);
+    setQueue(built);
+    setModalOpen(true);
   };
 
   const spinning = state === "spinning";
@@ -113,7 +130,7 @@ function Booth() {
         </header>
 
         {/* Hero */}
-        <section className="mt-2 flex flex-col items-center text-center">
+        <section className="-mt-12 flex flex-col items-center text-center relative z-20">
           <HeroHeading />
         </section>
 
@@ -126,9 +143,10 @@ function Booth() {
               rotation={rotation}
               spinning={spinning}
               size={isMobile ? 280 : 440}
+              onSegmentClick={handleSegmentClick}
             />
             <button
-              className="cs-btn mt-6"
+              className="cs-btn mt-2"
               onClick={spin}
               disabled={spinning}
               aria-label="Spin the wheel"
@@ -149,7 +167,7 @@ function Booth() {
 
       <ChallengeModal
         open={modalOpen}
-        category={landedCategory}
+        category={activeCategory}
         queue={queue}
         onBackToWheel={handleBackToWheel}
       />
