@@ -143,52 +143,70 @@ function pickFrom<T>(list: T[]): T {
 
 // Resolve a random challenge for a category. Adding new questions to
 // challenges.json is enough — no code changes required.
-export function pickQuestion(category: ChallengeCategory): Challenge {
+function shuffle<T>(list: T[]): T[] {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Expand a category into an ordered queue of every challenge it contains,
+// shuffled so each spin cycles through all questions in random order exactly
+// once. Single-item categories (external/challenge/reward) return one item.
+export function buildChallengeQueue(category: ChallengeCategory): Challenge[] {
   const c = category.raw;
   switch (c.type) {
     case "external":
-      return { type: "external", url: c.url };
-    case "image-quiz": {
-      const q = pickFrom(c.questions);
-      return { type: "image-quiz", image: q.image, answer: q.answer };
-    }
-    case "true-false": {
-      const q = pickFrom(c.questions);
-      return {
+      return [{ type: "external", url: c.url }];
+    case "image-quiz":
+      return shuffle(c.questions).map((q) => ({
+        type: "image-quiz",
+        image: q.image,
+        answer: q.answer,
+      }));
+    case "true-false":
+      return shuffle(c.questions).map((q) => ({
         type: "true-false",
         statement: q.statement,
         answer: q.answer,
         explanation: q.explanation,
-      };
-    }
-    case "emoji": {
-      const q = pickFrom(c.questions);
-      return { type: "emoji", emoji: q.emoji, answer: q.answer };
-    }
-    case "acronym": {
-      const q = pickFrom(c.questions);
-      return { type: "acronym", term: q.term, answer: q.answer };
-    }
-    case "creative": {
-      const q = pickFrom(c.questions);
-      return { type: "creative", instruction: c.instruction, term: q.term };
-    }
-    case "mcq": {
-      const q = pickFrom(c.questions);
-      return {
+      }));
+    case "emoji":
+      return shuffle(c.questions).map((q) => ({
+        type: "emoji",
+        emoji: q.emoji,
+        answer: q.answer,
+      }));
+    case "acronym":
+      return shuffle(c.questions).map((q) => ({
+        type: "acronym",
+        term: q.term,
+        answer: q.answer,
+      }));
+    case "creative":
+      return shuffle(c.questions).map((q) => ({
+        type: "creative",
+        instruction: c.instruction,
+        term: q.term,
+      }));
+    case "mcq":
+      return shuffle(c.questions).map((q) => ({
         type: "mcq",
         question: q.question,
         options: q.options,
         answer: q.answer,
-      };
-    }
-    case "timer": {
-      const q = pickFrom(c.questions);
-      return { type: "timer", timer: c.timer, challenge: q.challenge };
-    }
+      }));
+    case "timer":
+      return shuffle(c.questions).map((q) => ({
+        type: "timer",
+        timer: c.timer,
+        challenge: q.challenge,
+      }));
     case "challenge":
-      return { type: "challenge", challenge: c.challenge };
+      return [{ type: "challenge", challenge: c.challenge }];
     case "reward":
-      return { type: "reward", reward: c.reward };
+      return [{ type: "reward", reward: c.reward }];
   }
 }
