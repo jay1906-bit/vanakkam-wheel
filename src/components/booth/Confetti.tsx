@@ -60,7 +60,7 @@ export function Confetti({ trigger }: { trigger: number }) {
   return (
     <canvas
       ref={ref}
-      className="pointer-events-none fixed inset-0 z-50 h-full w-full"
+      className="pointer-events-none fixed inset-0 z-30 h-full w-full"
     />
   );
 }
