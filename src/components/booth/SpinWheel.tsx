@@ -91,8 +91,8 @@ export function SpinWheel({ categories, rotation, spinning, size = 520 }: Props)
                   style={{
                     fontFamily: "Inter, system-ui, sans-serif",
                     fontWeight: 800,
-                    fontSize: 15,
-                    letterSpacing: "0.14em",
+                    fontSize: 13,
+                    letterSpacing: "0.04em",
                   }}
                 >
                   {p.category.label}
