@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ChallengeModal } from "@/components/booth/ChallengeModal";
 import { Confetti } from "@/components/booth/Confetti";
 import { HeroHeading } from "@/components/booth/HeroHeading";
-import { Mascot } from "@/components/booth/Mascot";
 import { ParticleBackground } from "@/components/booth/ParticleBackground";
 import { SpinWheel } from "@/components/booth/SpinWheel";
 import { CATEGORIES, pickQuestion, type Challenge } from "@/data/challenges";
@@ -101,9 +100,6 @@ function Booth() {
         {/* Hero */}
         <section className="mt-6 flex flex-col items-center text-center">
           <HeroHeading />
-          <p className="mt-3 max-w-xl text-sm text-white/70 md:text-base">
-            Spin the wheel, land a category, take on a challenge. One player at a time.
-          </p>
         </section>
 
         {/* Wheel + mascot */}
@@ -116,11 +112,6 @@ function Booth() {
               spinning={spinning}
               size={isMobile ? 320 : 520}
             />
-
-            <div className="pointer-events-none absolute -left-48 top-8 hidden h-60 w-48 lg:block">
-              <Mascot />
-            </div>
-
             <button
               className="cs-btn mt-10"
               onClick={spin}

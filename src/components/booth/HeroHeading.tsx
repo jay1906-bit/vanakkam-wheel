@@ -1,9 +1,14 @@
 // "Vanakkam Sapiens!" heading matching the uploaded reference:
 // - "VANAKKAM" arched, thin tracked
 // - "SAPIENS!" heavy display, punchy green
+import { Mascot } from "./Mascot";
+
 export function HeroHeading() {
   return (
     <div className="relative flex flex-col items-center">
+      <div className="mb-2 h-24 w-24 sm:h-28 sm:w-28">
+        <Mascot />
+      </div>
       <ArchedVanakkam />
       <h1
         className="font-display text-[64px] leading-none tracking-tight sm:text-[92px] md:text-[112px]"
