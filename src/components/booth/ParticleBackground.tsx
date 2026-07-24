@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
 
-// Dev-themed particle background: floating code glyphs + drifting green blobs.
-// Canvas-based so it stays smooth even with many particles.
 const GLYPHS = [
   "{ }", "</>", "()", "=>", "&&", "||", "npm", "git", "AI", "λ",
   "0x", "fn", "//", "$_", "[]", ";;", "==", "!!",
@@ -33,17 +31,6 @@ export function ParticleBackground() {
     let w = 0;
     let h = 0;
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = canvas.clientWidth;
-      h = canvas.clientHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(48, Math.max(22, Math.floor((w * h) / 42000)));
-      particles = new Array(count).fill(0).map(() => spawn(true));
-    };
-
     const spawn = (initial: boolean): Particle => ({
       x: Math.random() * w,
       y: initial ? Math.random() * h : h + 20,
@@ -56,9 +43,19 @@ export function ParticleBackground() {
       vr: (Math.random() - 0.5) * 0.002,
     });
 
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.min(48, Math.max(22, Math.floor((w * h) / 42000)));
+      particles = new Array(count).fill(0).map(() => spawn(true));
+    };
+
     const tick = () => {
       ctx.clearRect(0, 0, w, h);
-      ctx.font = "600 16px 'JetBrains Mono', ui-monospace, monospace";
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -86,7 +83,6 @@ export function ParticleBackground() {
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Base gradient */}
       <div
         className="absolute inset-0"
         style={{
@@ -94,9 +90,8 @@ export function ParticleBackground() {
             "radial-gradient(ellipse at 20% 10%, #052e16 0%, #030706 40%, #000 100%)",
         }}
       />
-      {/* Drifting green blobs */}
       <div
-        className="absolute -top-32 -left-32 h-[520px] w-[520px] rounded-full opacity-60 blur-3xl"
+        className="absolute -left-32 -top-32 h-[520px] w-[520px] rounded-full opacity-60 blur-3xl"
         style={{
           background:
             "radial-gradient(circle, rgba(34,197,94,0.35), transparent 70%)",
@@ -111,11 +106,8 @@ export function ParticleBackground() {
           animation: "cs-drift 22s ease-in-out infinite reverse",
         }}
       />
-      {/* Grid overlay */}
-      <div className="absolute inset-0 cs-grid opacity-40" />
-      {/* Canvas glyphs */}
+      <div className="cs-grid absolute inset-0 opacity-40" />
       <canvas ref={ref} className="absolute inset-0 h-full w-full" />
-      {/* Vignette */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
     </div>
   );
