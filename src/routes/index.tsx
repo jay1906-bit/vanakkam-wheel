@@ -1,24 +1,162 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { ChallengeModal } from "@/components/booth/ChallengeModal";
+import { Confetti } from "@/components/booth/Confetti";
+import { HeroHeading } from "@/components/booth/HeroHeading";
+import { Mascot } from "@/components/booth/Mascot";
+import { ParticleBackground } from "@/components/booth/ParticleBackground";
+import { SpinWheel } from "@/components/booth/SpinWheel";
+import { CATEGORIES, pickQuestion, type Challenge } from "@/data/challenges";
+import { useSpinWheel } from "@/hooks/useSpinWheel";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Code Sapiens · Vanakkam Sapiens!" },
+      {
+        name: "description",
+        content:
+          "Interactive booth experience at TOSS by Code Sapiens — spin the wheel, take on a dev challenge.",
+      },
+      { property: "og:title", content: "Code Sapiens · Vanakkam Sapiens!" },
+      {
+        property: "og:description",
+        content: "Spin the wheel at the Code Sapiens booth (TOSS) and take on a dev challenge.",
+      },
+    ],
+  }),
+  component: Booth,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Booth() {
+  const categories = CATEGORIES;
+  const { rotation, state, landedIndex, spin, reset } = useSpinWheel(categories);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confettiKey, setConfettiKey] = useState(0);
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
+
+  // When wheel lands, pick a question and open the modal (delayed for confetti).
+  const landedCategory = landedIndex != null ? categories[landedIndex] : null;
+  useMemo(() => {
+    if (state === "landed" && landedCategory) {
+      setConfettiKey((k) => k + 1);
+      const q = pickQuestion(landedCategory);
+      const t = window.setTimeout(() => {
+        setChallenge(q);
+        setModalOpen(true);
+      }, 650);
+      return () => window.clearTimeout(t);
+    }
+    return undefined;
+  }, [state, landedCategory]);
+
+  const handleNextPlayer = () => {
+    setModalOpen(false);
+    setChallenge(null);
+    reset();
+  };
+
+  const spinning = state === "spinning";
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+    <main className="relative min-h-screen overflow-hidden bg-black text-white font-ui">
+      <ParticleBackground />
+
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-6 py-8 md:py-10">
+        {/* Top bar */}
+        <header className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded-lg"
+              style={{
+                background:
+                  "linear-gradient(135deg, #22c55e, #052e16)",
+                boxShadow: "0 6px 20px rgba(34,197,94,0.35)",
+              }}
+            >
+              <span className="font-display text-lg text-black">C</span>
+            </div>
+            <div className="leading-tight">
+              <div className="text-sm font-semibold tracking-widest text-white">
+                CODE SAPIENS
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.28em] text-emerald-400/80">
+                Explore · Evolve · Engineer
+              </div>
+            </div>
+          </div>
+          <div className="cs-glass-light hidden items-center gap-2 rounded-full px-4 py-2 sm:flex">
+            <span
+              className="inline-block h-2 w-2 rounded-full"
+              style={{ background: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
+            />
+            <span className="text-xs uppercase tracking-[0.24em] text-white/80">
+              TOSS Conference · Booth Live
+            </span>
+          </div>
+        </header>
+
+        {/* Hero */}
+        <section className="mt-6 flex flex-col items-center text-center">
+          <HeroHeading />
+          <p className="mt-3 max-w-xl text-sm text-white/70 md:text-base">
+            Spin the wheel, land a category, take on a challenge. One player at a time.
+          </p>
+        </section>
+
+        {/* Wheel + mascot */}
+        <section className="relative mt-8 flex flex-1 flex-col items-center justify-center">
+          <div className="cs-vignette absolute inset-0 -z-10" />
+          <div className="relative flex flex-col items-center">
+            <SpinWheel
+              categories={categories}
+              rotation={rotation}
+              spinning={spinning}
+              size={typeof window !== "undefined" && window.innerWidth < 640 ? 340 : 520}
+            />
+
+            <div className="pointer-events-none absolute -left-40 top-16 hidden h-56 w-40 md:block">
+              <Mascot />
+            </div>
+
+            <button
+              className="cs-btn mt-10"
+              onClick={spin}
+              disabled={spinning}
+              aria-label="Spin the wheel"
+            >
+              {spinning ? "Spinning…" : "Spin the wheel"}
+              <span aria-hidden>→</span>
+            </button>
+
+            <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-white/50">
+              <span className="h-px w-8 bg-white/20" />
+              {categories.length} categories · random question per spin
+              <span className="h-px w-8 bg-white/20" />
+            </div>
+          </div>
+        </section>
+
+        <footer className="mt-8 flex items-center justify-between text-[11px] uppercase tracking-[0.28em] text-white/40">
+          <span>© Code Sapiens</span>
+          <span>Vanakkam, Sapiens 🍃</span>
+        </footer>
+      </div>
+
+      <Confetti trigger={confettiKey} />
+
+      <ChallengeModal
+        open={modalOpen}
+        category={landedCategory}
+        challenge={challenge}
+        onStart={() => {
+          // Placeholder for challenge start — content will be provided later.
+          setModalOpen(false);
+        }}
+        onNext={handleNextPlayer}
       />
-    </div>
+    </main>
   );
 }
