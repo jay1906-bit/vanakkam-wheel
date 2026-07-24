@@ -6,7 +6,11 @@ import { Confetti } from "@/components/booth/Confetti";
 import { HeroHeading } from "@/components/booth/HeroHeading";
 import { ParticleBackground } from "@/components/booth/ParticleBackground";
 import { SpinWheel } from "@/components/booth/SpinWheel";
-import { CATEGORIES, pickQuestion, type Challenge } from "@/data/challenges";
+import {
+  CATEGORIES,
+  buildChallengeQueue,
+  type Challenge,
+} from "@/data/challenges";
 import { useSpinWheel } from "@/hooks/useSpinWheel";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -35,24 +39,35 @@ function Booth() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [confettiKey, setConfettiKey] = useState(0);
-  const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [queue, setQueue] = useState<Challenge[]>([]);
 
-  // When wheel lands, pick a question and open the modal (delayed for confetti).
   const landedCategory = landedIndex != null ? categories[landedIndex] : null;
+
+  // When wheel lands: external categories open the target URL in a new tab and
+  // reset the wheel; every other category opens the modal with a shuffled
+  // queue of ALL its questions (delayed briefly so confetti reads first).
   useEffect(() => {
     if (state !== "landed" || !landedCategory) return;
     setConfettiKey((k) => k + 1);
-    const q = pickQuestion(landedCategory);
+    const built = buildChallengeQueue(landedCategory);
+    if (built.length === 1 && built[0].type === "external") {
+      const url = built[0].url;
+      const t = window.setTimeout(() => {
+        window.open(url, "_blank", "noopener,noreferrer");
+        reset();
+      }, 650);
+      return () => window.clearTimeout(t);
+    }
     const t = window.setTimeout(() => {
-      setChallenge(q);
+      setQueue(built);
       setModalOpen(true);
     }, 650);
     return () => window.clearTimeout(t);
-  }, [state, landedCategory]);
+  }, [state, landedCategory, reset]);
 
-  const handleNextPlayer = () => {
+  const handleBackToWheel = () => {
     setModalOpen(false);
-    setChallenge(null);
+    setQueue([]);
     reset();
   };
 
@@ -60,10 +75,10 @@ function Booth() {
   const isMobile = useIsMobile();
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black text-white font-ui">
+    <main className="relative h-screen w-screen overflow-hidden bg-black text-white font-ui">
       <ParticleBackground />
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-6 py-8 md:py-10">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col px-6 py-4 md:py-6">
         {/* Top bar */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -98,22 +113,22 @@ function Booth() {
         </header>
 
         {/* Hero */}
-        <section className="mt-6 flex flex-col items-center text-center">
+        <section className="mt-2 flex flex-col items-center text-center">
           <HeroHeading />
         </section>
 
-        {/* Wheel + mascot */}
-        <section className="relative mt-8 flex flex-1 flex-col items-center justify-center">
+        {/* Wheel */}
+        <section className="relative mt-2 flex flex-1 min-h-0 flex-col items-center justify-center">
           <div className="cs-vignette absolute inset-0 -z-10" />
           <div className="relative flex flex-col items-center">
             <SpinWheel
               categories={categories}
               rotation={rotation}
               spinning={spinning}
-              size={isMobile ? 320 : 520}
+              size={isMobile ? 280 : 440}
             />
             <button
-              className="cs-btn mt-10"
+              className="cs-btn mt-6"
               onClick={spin}
               disabled={spinning}
               aria-label="Spin the wheel"
@@ -121,16 +136,10 @@ function Booth() {
               {spinning ? "Spinning…" : "Spin the wheel"}
               <span aria-hidden>→</span>
             </button>
-
-            <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-white/50">
-              <span className="h-px w-8 bg-white/20" />
-              {categories.length} categories · random question per spin
-              <span className="h-px w-8 bg-white/20" />
-            </div>
           </div>
         </section>
 
-        <footer className="mt-8 flex items-center justify-between text-[11px] uppercase tracking-[0.28em] text-white/40">
+        <footer className="mt-2 flex items-center justify-between text-[11px] uppercase tracking-[0.28em] text-white/40">
           <span>© Code Sapiens</span>
           <span>Vanakkam, Sapiens 🍃</span>
         </footer>
@@ -141,8 +150,8 @@ function Booth() {
       <ChallengeModal
         open={modalOpen}
         category={landedCategory}
-        challenge={challenge}
-        onNext={handleNextPlayer}
+        queue={queue}
+        onBackToWheel={handleBackToWheel}
       />
     </main>
   );
