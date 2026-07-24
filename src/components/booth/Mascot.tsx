@@ -1,22 +1,28 @@
 import mascotAsset from "@/assets/mascot.png.asset.json";
 
+// Mascot sits inside a glass "sticker" so the source PNG's white background
+// reads as intentional, not a compositing bug.
 export function Mascot({ className = "" }: { className?: string }) {
   return (
     <div className={`relative ${className}`}>
       <div
-        className="absolute inset-x-4 -bottom-4 h-6 rounded-full blur-xl"
-        style={{ background: "rgba(34,197,94,0.45)" }}
+        className="absolute -inset-4 rounded-[36%] blur-2xl"
+        style={{ background: "rgba(34,197,94,0.35)" }}
       />
-      <img
-        src={mascotAsset.url}
-        alt="Code Sapiens mascot"
-        className="cs-mascot-idle relative h-full w-full object-contain"
+      <div
+        className="cs-mascot-idle relative flex h-full w-full items-end justify-center overflow-hidden rounded-[32%] border border-emerald-400/40 bg-white p-4"
         style={{
-          filter: "invert(1) drop-shadow(0 0 18px rgba(34,197,94,0.55))",
-          mixBlendMode: "lighten",
+          boxShadow:
+            "0 20px 40px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255,255,255,0.6), 0 0 30px rgba(34,197,94,0.35)",
         }}
-        draggable={false}
-      />
+      >
+        <img
+          src={mascotAsset.url}
+          alt="Code Sapiens mascot"
+          className="h-full w-full object-contain"
+          draggable={false}
+        />
+      </div>
     </div>
   );
 }
