@@ -233,15 +233,7 @@
       "questions": [
         {
           "id": 1,
-          "challenge": "Name 5 Programming Languages"
-        },
-        {
-          "id": 2,
-          "challenge": "Name 5 Tech Companies"
-        },
-        {
-          "id": 3,
-          "challenge": "Name 5 AI Tools"
+          "challenge": "Name 5 Programming Languages, 5 Tech Companies, and 5 AI Tools"
         }
       ]
     },
