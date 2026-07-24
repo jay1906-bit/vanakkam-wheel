@@ -142,3 +142,168 @@
     color: var(--color-foreground);
   }
 }
+
+/* ============================================================
+ * Code Sapiens booth — brand tokens & utilities
+ * Palette: pure black / white / greens. No other colors.
+ * ============================================================ */
+:root {
+  --cs-black: #050505;
+  --cs-ink: #0a0a0a;
+  --cs-white: #ffffff;
+  --cs-green-50: #ecfdf5;
+  --cs-green-200: #a7f3d0;
+  --cs-green-400: #34d399;
+  --cs-green-500: #22c55e;
+  --cs-green-600: #16a34a;
+  --cs-green-700: #15803d;
+  --cs-green-800: #166534;
+  --cs-green-900: #052e16;
+  --cs-glow: 0 0 40px rgba(34, 197, 94, 0.35);
+}
+
+.font-display {
+  font-family: "Bowlby One", "Passion One", system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
+.font-arch {
+  font-family: "Josefin Sans", "Inter", system-ui, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.42em;
+}
+.font-ui {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Glassmorphism panel */
+.cs-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.cs-glass-light {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Primary green CTA */
+.cs-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.1rem 2.4rem;
+  border-radius: 999px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: #041306;
+  background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 10px 30px rgba(22, 163, 74, 0.45),
+    0 0 0 1px rgba(34, 197, 94, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.cs-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 40px rgba(22, 163, 74, 0.55),
+    0 0 0 1px rgba(34, 197, 94, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.cs-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.cs-btn:disabled {
+  filter: grayscale(0.4) brightness(0.7);
+  cursor: not-allowed;
+}
+.cs-btn-ghost {
+  background: transparent;
+  color: #ecfdf5;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+}
+.cs-btn-ghost:hover:not(:disabled) {
+  border-color: #22c55e;
+  color: #4ade80;
+}
+
+/* Wheel pointer bounce */
+@keyframes cs-pointer-bounce {
+  0%, 100% { transform: translate(-50%, 0) rotate(180deg); }
+  50% { transform: translate(-50%, 6px) rotate(180deg); }
+}
+.cs-pointer-idle {
+  animation: cs-pointer-bounce 2.4s ease-in-out infinite;
+}
+
+/* Mascot idle */
+@keyframes cs-mascot-bob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+.cs-mascot-idle {
+  animation: cs-mascot-bob 3.6s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+/* Slow drift for background gradients */
+@keyframes cs-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, -2%) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Grid overlay */
+.cs-grid {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Radial vignette on hero */
+.cs-vignette {
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(22, 163, 74, 0.18),
+    transparent 60%
+  );
+}
+
+/* Modal enter */
+@keyframes cs-modal-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cs-modal-in { animation: cs-modal-in 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+
+@keyframes cs-fade-in {
+  from { opacity: 0; } to { opacity: 1; }
+}
+.cs-fade-in { animation: cs-fade-in 0.4s ease-out both; }
+
+/* Glow ring for wheel */
+.cs-wheel-glow {
+  filter: drop-shadow(0 0 40px rgba(34, 197, 94, 0.45))
+          drop-shadow(0 0 90px rgba(34, 197, 94, 0.25));
+}
