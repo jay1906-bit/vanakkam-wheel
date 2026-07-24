@@ -5,21 +5,32 @@ import type { Challenge, ChallengeCategory } from "@/data/challenges";
 type Props = {
   open: boolean;
   category: ChallengeCategory | null;
-  challenge: Challenge | null;
-  onNext: () => void;
+  queue: Challenge[];
+  onBackToWheel: () => void;
 };
 
-export function ChallengeModal({ open, category, challenge, onNext }: Props) {
+export function ChallengeModal({ open, category, queue, onBackToWheel }: Props) {
+  const [index, setIndex] = useState(0);
+
+  // Reset the question index whenever the modal is (re)opened for a category.
+  useEffect(() => {
+    if (open) setIndex(0);
+  }, [open, category?.id, queue]);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onNext();
+      if (e.key === "Escape") onBackToWheel();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onNext]);
+  }, [open, onBackToWheel]);
 
-  if (!open || !category || !challenge) return null;
+  if (!open || !category || queue.length === 0) return null;
+
+  const challenge = queue[Math.min(index, queue.length - 1)];
+  const isLast = index >= queue.length - 1;
+  const total = queue.length;
 
   return (
     <div
@@ -30,43 +41,57 @@ export function ChallengeModal({ open, category, challenge, onNext }: Props) {
     >
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-md"
-        onClick={onNext}
+        onClick={onBackToWheel}
       />
       <div
-        className="cs-glass cs-modal-in relative w-full max-w-xl rounded-3xl p-8 md:p-10"
+        className="cs-glass cs-modal-in relative w-full max-w-xl rounded-3xl p-6 md:p-8"
         style={{
           boxShadow:
             "0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(34,197,94,0.25)",
         }}
       >
-        <div className="mb-5 flex items-center gap-3">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
           <span
             className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold tracking-widest"
             style={{ background: category.color, color: category.textColor }}
           >
             {category.label}
           </span>
-          <span className="text-xs uppercase tracking-[0.3em] text-emerald-300/70">
-            Challenge selected
-          </span>
+          {total > 1 && (
+            <span className="text-xs uppercase tracking-[0.3em] text-emerald-300/70">
+              Question {index + 1} / {total}
+            </span>
+          )}
         </div>
 
         <h2
           id="challenge-title"
-          className="font-display text-3xl leading-none md:text-4xl"
+          className="font-display text-2xl leading-none md:text-3xl"
           style={{ color: "#4ade80" }}
         >
           {category.label}
         </h2>
 
-        <div className="mt-6">
-          <ChallengeBody challenge={challenge} />
+        <div className="mt-5 max-h-[55vh] overflow-y-auto pr-1">
+          <ChallengeBody key={index} challenge={challenge} />
         </div>
 
-        <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-          <button className="cs-btn" onClick={onNext}>
-            Next player →
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+          <button className="cs-btn cs-btn-ghost" onClick={onBackToWheel}>
+            ← Back to wheel
           </button>
+          {!isLast ? (
+            <button
+              className="cs-btn"
+              onClick={() => setIndex((i) => Math.min(i + 1, queue.length - 1))}
+            >
+              Next question →
+            </button>
+          ) : total > 1 ? (
+            <button className="cs-btn" onClick={onBackToWheel}>
+              Back to wheel →
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
