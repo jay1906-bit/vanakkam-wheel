@@ -7,10 +7,11 @@ type Props = {
   rotation: number;
   spinning: boolean;
   size?: number;
+  onSegmentClick?: (index: number) => void;
 };
 
 // SVG wheel. Segments computed from category count; rotation applied to <g>.
-export function SpinWheel({ categories, rotation, spinning, size = 520 }: Props) {
+export function SpinWheel({ categories, rotation, spinning, size = 520, onSegmentClick }: Props) {
   const r = size / 2;
   const cx = r;
   const cy = r;
@@ -74,7 +75,11 @@ export function SpinWheel({ categories, rotation, spinning, size = 520 }: Props)
           }}
         >
           {paths.map((p, i) => (
-            <g key={p.category.id}>
+            <g 
+              key={p.category.id} 
+              onClick={() => onSegmentClick?.(i)}
+              style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
+            >
               <path
                 d={p.d}
                 fill={`url(#seg-${i})`}

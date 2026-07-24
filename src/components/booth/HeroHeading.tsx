@@ -6,7 +6,7 @@ export function HeroHeading() {
     <div className="relative flex flex-col items-center">
       <ArchedVanakkam />
       <h1
-        className="font-display text-[48px] leading-none tracking-tight sm:text-[72px] md:text-[88px]"
+        className="font-display text-[36px] leading-none tracking-tight sm:text-[56px] md:text-[72px]"
         style={{
           color: "#22c55e",
           textShadow:
@@ -23,7 +23,7 @@ function ArchedVanakkam() {
   return (
     <svg
       viewBox="0 0 600 180"
-      className="mb-1 w-[220px] sm:w-[320px] md:w-[400px]"
+      className="mb-1 w-[180px] sm:w-[260px] md:w-[320px]"
       aria-label="Vanakkam"
     >
       <defs>
