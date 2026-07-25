@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import type { ChallengeCategory } from "@/data/challenges";
+import logoAsset from "@/assets/code-sapiens-logo.png.asset.json";
 
 type Props = {
   categories: ChallengeCategory[];
@@ -118,38 +119,23 @@ export function SpinWheel({ categories, rotation, spinning, size = 520, onSegmen
             stroke="#22c55e"
             strokeWidth={2}
           />
-          <text
-            x={cx}
-            y={cy + 6}
-            textAnchor="middle"
-            fill="#4ade80"
-            style={{
-              fontFamily: "Bowlby One, sans-serif",
-              fontSize: 20,
-              letterSpacing: "0.08em",
-            }}
-          >
-            CS
-          </text>
-        </g>
-
-        <g>
-          {new Array(categories.length * 2).fill(0).map((_, i) => {
-            const a =
-              ((i / (categories.length * 2)) * 360 - 90) * (Math.PI / 180);
-            const rr = r - 22;
+          {(() => {
+            const hubR = inner + 26;
+            const imgSize = hubR * 1.2; // ~60% of hub diameter
             return (
-              <circle
-                key={i}
-                cx={cx + rr * Math.cos(a)}
-                cy={cy + rr * Math.sin(a)}
-                r={3}
-                fill={i % 2 === 0 ? "#4ade80" : "#ffffff"}
-                opacity={0.85}
+              <image
+                href={logoAsset.url}
+                x={cx - imgSize / 2}
+                y={cy - imgSize / 2}
+                width={imgSize}
+                height={imgSize}
+                preserveAspectRatio="xMidYMid meet"
+                style={{ filter: "invert(1)" }}
               />
             );
-          })}
+          })()}
         </g>
+
       </svg>
 
       <div
