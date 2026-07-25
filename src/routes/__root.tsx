@@ -81,23 +81,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Spin the wheel at the Code Sapiens booth — TOSS conference interactive challenge experience.",
+          "Interactive booth experience at TOSS by Code Sapiens — spin the wheel, take on a dev challenge.",
       },
       { name: "author", content: "Code Sapiens" },
       { property: "og:title", content: "Code Sapiens · Vanakkam Sapiens!" },
       {
         property: "og:description",
-        content: "Spin the wheel and take on a dev challenge at TOSS.",
+        content: "Interactive booth experience at TOSS by Code Sapiens — spin the wheel, take on a dev challenge.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Code Sapiens · Vanakkam Sapiens!" },
+      { name: "twitter:description", content: "Interactive booth experience at TOSS by Code Sapiens — spin the wheel, take on a dev challenge." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/90df55b2-4f3c-460c-b178-9fd9e7d16aff/id-preview-e1b04119--933bc27f-9823-46c8-b124-3d1c21a67338.lovable.app-1784957814665.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/90df55b2-4f3c-460c-b178-9fd9e7d16aff/id-preview-e1b04119--933bc27f-9823-46c8-b124-3d1c21a67338.lovable.app-1784957814665.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

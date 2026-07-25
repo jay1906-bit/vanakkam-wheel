@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Code Sapiens · Vanakkam Sapiens!" },
       {
         property: "og:description",
-        content: "Spin the wheel at the Code Sapiens booth (TOSS) and take on a dev challenge.",
+        content: "Interactive booth experience at TOSS by Code Sapiens — spin the wheel, take on a dev challenge.",
       },
     ],
   }),
