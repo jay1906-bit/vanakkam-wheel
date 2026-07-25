@@ -101,13 +101,20 @@ function Booth() {
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
-              className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-white p-1 ring-1 ring-emerald-400/60"
-              style={{ boxShadow: "0 6px 20px rgba(34,197,94,0.35)" }}
+              className="flex items-center justify-center rounded-xl bg-white p-1 ring-1 ring-emerald-400/60"
+              style={{
+                width: 52,
+                height: 52,
+                boxShadow: "0 6px 20px rgba(34,197,94,0.35)",
+              }}
             >
               <img
                 src={logoAsset.url}
                 alt="Code Sapiens logo"
                 className="h-full w-full object-contain"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.visibility = "hidden";
+                }}
               />
             </div>
             <div className="leading-tight">
