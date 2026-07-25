@@ -1,4 +1,4 @@
-import mascotAsset from "@/assets/mascot.png.asset.json";
+import mascotAsset from "/assets/mascot.png";
 
 // Mascot sits inside a glass "sticker" so the source PNG's white background
 // reads as intentional, not a compositing bug.
@@ -17,7 +17,7 @@ export function Mascot({ className = "" }: { className?: string }) {
         }}
       >
         <img
-          src={mascotAsset.url}
+          src={mascotAsset}
           alt="Code Sapiens mascot"
           className="h-full w-full object-contain"
           draggable={false}
