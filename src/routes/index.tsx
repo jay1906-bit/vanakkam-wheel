@@ -6,6 +6,7 @@ import { Confetti } from "@/components/booth/Confetti";
 import { HeroHeading } from "@/components/booth/HeroHeading";
 import { ParticleBackground } from "@/components/booth/ParticleBackground";
 import { SpinWheel } from "@/components/booth/SpinWheel";
+import logoAsset from "@/assets/code-sapiens-logo.png.asset.json";
 import {
   CATEGORIES,
   buildChallengeQueue,
@@ -99,16 +100,11 @@ function Booth() {
         {/* Top bar */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div
-              className="flex h-9 w-9 items-center justify-center rounded-lg"
-              style={{
-                background:
-                  "linear-gradient(135deg, #22c55e, #052e16)",
-                boxShadow: "0 6px 20px rgba(34,197,94,0.35)",
-              }}
-            >
-              <span className="font-display text-lg text-black">C</span>
-            </div>
+            <img
+              src={logoAsset.url}
+              alt="Code Sapiens logo"
+              className="h-10 w-10 sm:h-12 sm:w-12 object-contain drop-shadow-[0_4px_14px_rgba(34,197,94,0.35)]"
+            />
             <div className="leading-tight">
               <div className="text-sm font-semibold tracking-widest text-white">
                 CODE SAPIENS
