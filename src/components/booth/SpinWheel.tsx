@@ -31,7 +31,11 @@ export function SpinWheel({ categories, rotation, spinning, size = 520, onSegmen
       const mid = ((i + 0.5) * segAngle - 90) * (Math.PI / 180);
       const lx = cx + r * 0.66 * Math.cos(mid);
       const ly = cy + r * 0.66 * Math.sin(mid);
-      const labelRotation = i * segAngle + segAngle / 2;
+      // Align label along the slice's radial centerline (reading outward).
+      // Flip 180° on the left half so text stays right-side-up.
+      const radialDeg = (i + 0.5) * segAngle - 90;
+      const flip = radialDeg > 90 && radialDeg < 270 ? 180 : 0;
+      const labelRotation = radialDeg + flip;
       return { d, category: c, lx, ly, labelRotation };
     });
   }, [categories, cx, cy, r, segAngle]);
